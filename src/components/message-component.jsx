@@ -2,6 +2,8 @@ import React from 'react';
 import '../css/style.css';
 
 function Message(props) {
+    // const [counter, setCounter] = useState(0);
+
     return (
         <div className='message'>
             <div className='message_txt'>

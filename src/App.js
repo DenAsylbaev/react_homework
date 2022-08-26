@@ -2,10 +2,13 @@
 import './css/style.css';
 
 import Message from './components/message-component';
+import MessageList from './components/messageList';
+
 
 // const myText = "anyText";
 
-function App(props) {
+function App(props) {  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +21,7 @@ function App(props) {
               }
             }
             />
+      <MessageList />
       </header>
     </div>
     
