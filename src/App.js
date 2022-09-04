@@ -1,30 +1,34 @@
 // import logo from './logo.svg';
+import React from 'react';
+
 import './css/style.css';
+import MessageListFunc from './components/messageListFunc'
+import { ThemeProvider } from './contexts/theme-provider';
+import { ColorModeSwitch } from './components/color-mode-switch';
+import { Box } from '@mui/material';
 
-import Message from './components/message-component';
-import MessageList from './components/messageList';
 
+const makeAppStyles = (theme) => { 
+  const { mode, background, grey } = theme.palette;
+  
+  return {
+    background: mode === 'light' ? background.paper : grey[800],  
+}};
 
-// const myText = "anyText";
-
-function App(props) {  
-
+function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-      <div>My name is {props.name}</div>
-      <Message 
-            text = { 
-            {
-              1: "Hello world!", 
-              2: "This is my First React App"
-              }
-            }
-            />
-      <MessageList />
-      </header>
-    </div>
-    
+    <ThemeProvider>
+      <Box sx={makeAppStyles}>
+      <div className="App">
+          <ColorModeSwitch />
+
+          <header className="App-header">
+          <MessageListFunc />
+          </header>
+        </div>
+      </Box>
+    </ThemeProvider>
   );
 }
 
