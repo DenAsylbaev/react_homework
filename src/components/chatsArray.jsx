@@ -18,7 +18,7 @@ export default function ChatsArray({ messageList }) {
                 maxWidth: '400px'
             }}
         >
-            <h3>Chats list</h3>
+            <h3>Messages list</h3>
             { chatArr.map(item => (
                 <ListItem key={item.id}>
                     <ChatIcon/>

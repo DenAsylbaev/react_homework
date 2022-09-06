@@ -89,3 +89,22 @@
   /* position: absolute; */
   right: 0;
 }
+
+.toolbar_list {
+  list-style-type: none;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.toolbar_list li {
+  padding-left: 20px;
+}
+
+.toolbar_list a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}

@@ -2,12 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import TextField from '@mui/material/TextField';
-import ChatsArray from './chatsArray'
+// import ChatsArray from './chatsArray'
 
 let timer;
 let setTextFocus;
 
-export default function MessageListFunc() {
+export default function MessageListFunc({ renderMessageList }) {
     const [messageList, setMessageList] = useState([]);
     const [author, setAuthor] = useState('');
     const [text, setText] = useState('');
@@ -26,6 +26,7 @@ export default function MessageListFunc() {
         setTextFocus = (input) => input && input.focus();
     }
 
+
     useEffect(() => {
         if (messageList[messageList.length-1]?.author === 'user') {
             clearTimeout(timer);
@@ -35,16 +36,16 @@ export default function MessageListFunc() {
                         text: 'Your request has been accepted',
                         author: 'bot' 
                     }
-                ]))   
+                ]));
             }, 1500)
         }
-        // clearTimeout();
         return () => { clearTimeout(timer); }
     }, [messageList]);
 
     return (
         <>
-            <ChatsArray messageList={messageList}/>
+            { renderMessageList(messageList) }
+
             <div className="message_list_wrap">
                 <div className="input_form">
                     <TextField id="" 
