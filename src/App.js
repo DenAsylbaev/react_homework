@@ -16,6 +16,11 @@ import Chat from './pages/chatPage'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import chatList from './chats.json';
 
+import { Provider } from "react-redux";
+import { store } from './pages/store/store';
+
+
+
 
 const makeAppStyles = (theme) => { 
   const { mode, background, grey } = theme.palette;
@@ -56,7 +61,10 @@ function App() {
                     <Home />
                   </Route>
                   <Route path="/profile">
+                  <Provider store={store}>
+
                     <Profile />
+                    </Provider>
                   </Route>
                   <Route exact path="/chats">
                     <Chats 
