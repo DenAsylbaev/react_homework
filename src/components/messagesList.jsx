@@ -4,9 +4,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChatIcon from '@mui/icons-material/Chat';
 
-export default function ChatsArray({ messageList }) {
+export default function ChatsArray({ messageList, post }) {
 
-    const chatArr = (messageList.map(((item, index) => ({...item, id: index}))));
+    const postId = post.id;
+    let chatArr = [];
+    if (messageList[postId]) {
+        chatArr = (messageList[postId].map(((item, index) => ({...item, id: index}))));
+    }
 
     return (
         <List
@@ -18,7 +22,7 @@ export default function ChatsArray({ messageList }) {
                 maxWidth: '400px'
             }}
         >
-            <h3>Messages list</h3>
+            <h3>Chats list</h3>
             { chatArr.map(item => (
                 <ListItem key={item.id}>
                     <ChatIcon/>

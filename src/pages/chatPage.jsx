@@ -1,14 +1,15 @@
 import React from "react";
-import MessageListFunc from '../components/messageListFunc';
-import ChatsArray from '../components/chatsArray'
+import MessageFunc from '../components/messages';
+import MessagesList from '../components/messagesList'
 import { useParams } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function Chat({ chats }) {
 
+export default function Chat() {
     const { id } = useParams();
-
-    const post = chats.find((el) => el.id === +id);
+    const { chatList } = useSelector((state) => state.chatsReducer);
+    const post = chatList.find((el) => el.id === id);
 
     if (!id || !post) {
         return <Redirect to="/chats" />;
@@ -20,9 +21,13 @@ export default function Chat({ chats }) {
                 <h3>{post.title}</h3>
             )}
             <header className="App-header">
-                <MessageListFunc 
+                <MessageFunc 
+                    post = { post }
                     renderMessageList = { (messageList) => {
-                        return <ChatsArray messageList={messageList}/>
+                        return <MessagesList 
+                                messageList={ messageList }
+                                post={ post }
+                                />
                     } }/>
             </header>
         </div>

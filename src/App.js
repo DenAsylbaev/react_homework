@@ -1,7 +1,5 @@
 // import logo from './logo.svg';
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import './css/style.css';
 import { ThemeProvider } from './contexts/theme-provider';
 import { ColorModeSwitch } from './components/color-mode-switch';
@@ -14,12 +12,9 @@ import Chats from './pages/chatsPage';
 import Profile from './pages/profilePage'
 import Chat from './pages/chatPage'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import chatList from './chats.json';
 
 import { Provider } from "react-redux";
-import { store } from './pages/store/store';
-
-
+import { store } from './store/store';
 
 
 const makeAppStyles = (theme) => { 
@@ -30,11 +25,6 @@ const makeAppStyles = (theme) => {
 }};
 
 function App() {
-  const [chats, setChats] = useState([]);
-
-    useEffect(() => {
-        setChats(chatList);
-    }, []);
 
   return (
         <BrowserRouter>
@@ -57,25 +47,23 @@ function App() {
                 </Toolbar>
               </AppBar>
               <Switch>
-                  <Route exact path="/">
-                    <Home />
-                  </Route>
-                  <Route path="/profile">
-                  <Provider store={store}>
+                <Provider store={store}>
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                    <Route path="/profile">
 
-                    <Profile />
-                    </Provider>
-                  </Route>
-                  <Route exact path="/chats">
-                    <Chats 
-                      chats = { chats }/>
-                  </Route>
-                  <Route exact path="/chats/:id?">
-                    <Chat 
-                      chats = { chats }/>
-                  </Route>
-
+                      <Profile />
+                    </Route>
+                    <Route exact path="/chats">
+                      <Chats/>
+                    </Route>
+                    <Route exact path="/chats/:id?">
+                      <Chat/>
+                    </Route>
+                  </Provider>
                 </Switch>
+
           </Box>
         </ThemeProvider>
       </BrowserRouter>
