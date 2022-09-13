@@ -108,3 +108,23 @@
   font-weight: 600;
   font-size: 14px;
 }
+
+.chat_list_item {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    list-style-type: none;
+    background-color: #c7c7c7;
+}
+
+.chat_create {
+  margin-top: 40px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 15px;
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+}

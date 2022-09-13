@@ -1,1 +1,0 @@
-export const NAME_CONTROL = 'NAME_CONTROL';

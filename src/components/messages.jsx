@@ -2,15 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import TextField from '@mui/material/TextField';
-// import ChatsArray from './chatsArray'
+
+import { saveMessage } from '../store/messages/constants';
+import { useSelector, useDispatch } from "react-redux";
 
 let timer;
 let setTextFocus;
 
-export default function MessageListFunc({ renderMessageList }) {
+export default function MessageFunc({ renderMessageList, post }) {
     const [messageList, setMessageList] = useState([]);
     const [author, setAuthor] = useState('');
     const [text, setText] = useState('');
+    const { newMessageList } = useSelector((state) => state.messagesReducer);
+    const postId = post.id;
+    const dispatch = useDispatch();
 
     const sendMessage = () => {
         setMessageList((prev) => ([...prev,
@@ -19,13 +24,11 @@ export default function MessageListFunc({ renderMessageList }) {
                 author: author 
             }
         ]))
-
         setText('');
         setAuthor('');
-
+    
         setTextFocus = (input) => input && input.focus();
     }
-
 
     useEffect(() => {
         if (messageList[messageList.length-1]?.author === 'user') {
@@ -41,11 +44,15 @@ export default function MessageListFunc({ renderMessageList }) {
         }
         return () => { clearTimeout(timer); }
     }, [messageList]);
+    
+    useEffect(() => {
+        dispatch(saveMessage(messageList, postId));
+        console.log('DISPATC');
+    }, [messageList, postId, dispatch]);
 
     return (
         <>
-            { renderMessageList(messageList) }
-
+            { renderMessageList(newMessageList) }
             <div className="message_list_wrap">
                 <div className="input_form">
                     <TextField id="" 
@@ -56,7 +63,6 @@ export default function MessageListFunc({ renderMessageList }) {
                         required
                         fullWidth
                         value={ author }
-
                     />
                     <TextField id="" 
                         label="Message" 
@@ -76,13 +82,14 @@ export default function MessageListFunc({ renderMessageList }) {
                 </div>
                 <div className="message_box">
                     {
-                        messageList.map((el, index) => {
-                                return (
-                                    <ul key={index} className={ el.author === 'bot' ? 'bot_message' : 'user_message'}>
-                                        <li className="author">author: { el.author }</li>
-                                        <li className="text">message: { el.text }</li>
-                                    </ul>
-                                    )
+                       newMessageList[postId] &&
+                       newMessageList[postId].map((el, index) => {
+                            return (
+                                <ul key={index} className={ el.author === 'bot' ? 'bot_message' : 'user_message'}>
+                                    <li className="author">author: { el.author }</li>
+                                    <li className="text">message: { el.text }</li>
+                                </ul>
+                                )
                             }
                         )
                     }
