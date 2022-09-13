@@ -8,12 +8,16 @@ const initialState = {
 export const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case SAVE_MESSAGES:
+            const currentList = state.newMessageList[action.postId] || [];
                 return {
                     ...state,
                     newMessageList: {
-                        // ...state.newMessageList,
-                            [action.postId]: 
-                                action.payload
+                        ...state.newMessageList,
+                            [action.postId]: [
+                                ...currentList, {
+                                ...action.payload
+                                }
+                            ]
                     }
                 }
         default:
