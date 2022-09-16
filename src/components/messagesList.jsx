@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChatIcon from '@mui/icons-material/Chat';
 
-export default function ChatsArray({ messageList, post }) {
+export default function MessagesList({ messageList, post }) {
 
     const postId = post.id;
     let chatArr = [];

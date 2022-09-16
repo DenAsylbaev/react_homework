@@ -15,7 +15,9 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 
 import { Provider } from "react-redux";
 import { store } from './store/store';
-
+import { persistor } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+// import { PersistGate } from 'redux-persist/es/integration/react';
 
 const makeAppStyles = (theme) => { 
   const { mode, background, grey } = theme.palette;
@@ -48,22 +50,23 @@ function App() {
               </AppBar>
               <Switch>
                 <Provider store={store}>
-                    <Route exact path="/">
-                      <Home />
-                    </Route>
-                    <Route path="/profile">
+                  <PersistGate persistor={persistor}>
+                      <Route exact path="/">
+                        <Home />
+                      </Route>
+                      <Route path="/profile">
 
-                      <Profile />
-                    </Route>
-                    <Route exact path="/chats">
-                      <Chats/>
-                    </Route>
-                    <Route exact path="/chats/:id?">
-                      <Chat/>
-                    </Route>
+                        <Profile />
+                      </Route>
+                      <Route exact path="/chats">
+                        <Chats/>
+                      </Route>
+                      <Route exact path="/chats/:id?">
+                        <Chat/>
+                      </Route>
+                    </PersistGate>
                   </Provider>
                 </Switch>
-
           </Box>
         </ThemeProvider>
       </BrowserRouter>
