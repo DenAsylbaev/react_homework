@@ -17,7 +17,7 @@ import { Provider } from "react-redux";
 import { store } from './store/store';
 import { persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
-// import { PersistGate } from 'redux-persist/es/integration/react';
+import ApiData, { apiData } from './pages/apiDataPage'
 
 const makeAppStyles = (theme) => { 
   const { mode, background, grey } = theme.palette;
@@ -44,6 +44,9 @@ function App() {
                     <li>
                       <Link to="/">Home</Link>
                     </li>
+                    <li>
+                      <Link to="/api">API</Link>
+                    </li>
                   </ul>
                   <ColorModeSwitch />
                 </Toolbar>
@@ -55,7 +58,6 @@ function App() {
                         <Home />
                       </Route>
                       <Route path="/profile">
-
                         <Profile />
                       </Route>
                       <Route exact path="/chats">
@@ -63,6 +65,9 @@ function App() {
                       </Route>
                       <Route exact path="/chats/:id?">
                         <Chat/>
+                      </Route>
+                      <Route exact path="/api">
+                        <ApiData/>
                       </Route>
                     </PersistGate>
                   </Provider>
