@@ -3,7 +3,6 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { chatsReducer } from './chats/reducer'
 import { showNameReducer } from './profile/reducer';
 import { messagesReducer } from './messages/reducer';
-import { gistsReducer } from './api/reduser'
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -15,12 +14,12 @@ const persistConfig = {
     storage,
     }
 
-const persistedReducer = persistReducer(persistConfig, combineReducers({ showNameReducer, messagesReducer, chatsReducer, gistsReducer }));
+const persistedReducer = persistReducer(persistConfig, combineReducers({ showNameReducer, messagesReducer, chatsReducer }));
 
 export const store = createStore(
     persistedReducer,
-    // window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    // window.__REDUX_DEVTOOLS_EXTENSION__(),
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
     composeEnhancers(applyMiddleware(thunk)));
 
 export const persistor = persistStore(store);
