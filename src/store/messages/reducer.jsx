@@ -1,4 +1,3 @@
-// import { NAME_CONTROL } from './constants';
 import { SAVE_MESSAGES } from './constants';
 
 const initialState = {
@@ -8,17 +7,9 @@ const initialState = {
 export const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case SAVE_MESSAGES:
-            const currentList = state.newMessageList[action.postId] || [];
                 return {
                     ...state,
-                    newMessageList: {
-                        ...state.newMessageList,
-                            [action.postId]: [
-                                ...currentList, {
-                                ...action.payload
-                                }
-                            ]
-                    }
+                    newMessageList: action.payload
                 }
         default:
             return state

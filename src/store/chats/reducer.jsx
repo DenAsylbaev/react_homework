@@ -11,13 +11,7 @@ export const chatsReducer = (state = initialState, action) => {
         case ADD_CHAT:
                 return {
                     ...state,
-                    chatList: [
-                        ...state.chatList,
-                        {
-                            id: `${state.chatList.length}`,
-                            title: action.payload,
-                        },
-                    ],
+                    chatList: action.payload
                 };
         case DELETE_CHAT:
             const index = state.chatList.findIndex(n => n.id === action.payload);
