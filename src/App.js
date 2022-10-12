@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React from 'react';
 import './css/style.css';
 import { ThemeProvider } from './contexts/theme-provider';
@@ -6,6 +5,9 @@ import { ColorModeSwitch } from './components/color-mode-switch';
 import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 import Home from './pages/homePage';
 import Chats from './pages/chatsPage';
@@ -17,7 +19,16 @@ import { Provider } from "react-redux";
 import { store } from './store/store';
 import { persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import ApiData, { apiData } from './pages/apiDataPage'
+import ApiData from './pages/apiDataPage';
+
+import { Registration } from './components/registration';
+import { LoginComp } from './components/login'
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from './firebase-config';
+
+import { PrivateRoute } from './HOCS/PrivateRoute';
+
 
 const makeAppStyles = (theme) => { 
   const { mode, background, grey } = theme.palette;
@@ -27,6 +38,16 @@ const makeAppStyles = (theme) => {
 }};
 
 function App() {
+  const [authed, setAuthed] = useState(false);
+  const auth = getAuth(app);
+
+  useEffect(() => {
+      onAuthStateChanged(auth, user => {
+          if (user) {
+              setAuthed(true);
+          }
+      })
+  }, [auth])
 
   return (
         <BrowserRouter>
@@ -57,21 +78,30 @@ function App() {
                       <Route exact path="/">
                         <Home />
                       </Route>
-                      <Route path="/profile">
+
+                      <Route exact path="/login">
+                        <LoginComp />
+                      </Route>
+                      <Route exact path="/registration">
+                        <Registration />
+                      </Route>
+                      
+                      <PrivateRoute authenticated={authed} path="/profile">
                         <Profile />
-                      </Route>
-                      <Route exact path="/chats">
-                        <Chats/>
-                      </Route>
-                      <Route exact path="/chats/:id?">
+                      </PrivateRoute>
+                      
+                      <PrivateRoute authenticated={authed} exact path="/chats">
+                        <Chats />
+                      </PrivateRoute>
+                      <PrivateRoute authenticated={authed} exact path="/chats/:id?">
                         <Chat/>
-                      </Route>
-                      <Route exact path="/api">
+                      </PrivateRoute>
+                      <PrivateRoute authenticated={authed} exact path="/api">
                         <ApiData/>
-                      </Route>
+                      </PrivateRoute>
                     </PersistGate>
                   </Provider>
-                </Switch>
+                </Switch>  
           </Box>
         </ThemeProvider>
       </BrowserRouter>

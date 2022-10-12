@@ -9,11 +9,11 @@ import { useSelector } from "react-redux";
 export default function Chat() {
     const { id } = useParams();
     const { chatList } = useSelector((state) => state.chatsReducer);
-    const post = chatList.find((el) => el.id === id);
+    const post = chatList.find((el) => el.id === +id);
 
     if (!id || !post) {
         return <Redirect to="/chats" />;
-        }
+    }
             
     return (
         <div className="App">
@@ -25,8 +25,8 @@ export default function Chat() {
                     post = { post }
                     renderMessageList = { (messageList) => {
                         return <MessagesList 
-                                messageList={ messageList }
-                                post={ post }
+                                    messageList={ messageList }
+                                    post={ post }
                                 />
                     } }/>
             </header>

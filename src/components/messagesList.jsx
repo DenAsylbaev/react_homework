@@ -6,10 +6,9 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 export default function MessagesList({ messageList, post }) {
 
-    const postId = post.id;
     let chatArr = [];
-    if (messageList[postId]) {
-        chatArr = (messageList[postId].map(((item, index) => ({...item, id: index}))));
+    if (messageList) {
+        chatArr = (messageList.map(((item, index) => ({...item, id: index}))));
     }
 
     return (

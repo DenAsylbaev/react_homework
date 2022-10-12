@@ -9,14 +9,6 @@ const initialState = {
     error: null,
     };
 
-
-// export default const gistsReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         default:
-//             return state;
-//     }
-// }
-
 export const gistsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GISTS_REQUEST:

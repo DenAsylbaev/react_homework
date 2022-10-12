@@ -3,23 +3,26 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
-import { addChat } from '../store/chats/constants';
-import { deleteChat } from '../store/chats/constants';
+import { addChatWithFirebase, initChatTracking, deleteChatWithFirebase } from '../store/chats/constants';
+import { useEffect } from "react";
 import '../css/style.css'
 
 
 export default function Chats() {
     const dispatch = useDispatch();
     const [newChatName, setNewChatName] = useState('');
-
     const { chatList } = useSelector((state) => state.chatsReducer);
     const createChat = useCallback(() => {
-        dispatch(addChat(newChatName))
-        }, [dispatch, newChatName]);
+        dispatch(addChatWithFirebase(newChatName, chatList.length)) //middleware!!
+        }, [dispatch, newChatName, chatList.length]);
 
     const handleChange = (e) => {
         setNewChatName(e.target.value);
         }
+
+    useEffect(() => {
+            dispatch(initChatTracking());
+    }, [dispatch]);
 
     return (
         <div className="App">
@@ -32,7 +35,7 @@ export default function Chats() {
                         </Link>
                         <button 
                             key={`btn_${el.id}`} 
-                            onClick={() => dispatch(deleteChat(el.id))}>
+                            onClick={() => dispatch(deleteChatWithFirebase(el.id))}>
                                 DELETE CHAT
                         </button>
                     </div>
