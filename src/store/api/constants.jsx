@@ -31,10 +31,9 @@ export const getAllGists = () => async (dispatch) => {
         try {
             const res = await fetch(API_URL_PUBLIC);
             if (!res.ok) {
-                throw new Error(`Request failed with status ${res.status}`);
+                throw new Error(`R equest failed with status ${res.status}`);
             }
             const result = await res.json();
-            console.log(result);
             dispatch(getGistsSuccess(result));
         } catch (err) {
             dispatch(getGistsFailure(err.message));

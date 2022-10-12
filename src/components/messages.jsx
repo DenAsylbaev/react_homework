@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import TextField from '@mui/material/TextField';
-import { saveMessageWithThunk } from "../store/messages/constants";
+import { addMessageWithFirebase, initMessagesTracking } from "../store/messages/constants";
+
 import { useSelector, useDispatch } from "react-redux";
 
 let setTextFocus;
@@ -26,14 +27,17 @@ export default function MessageFunc({ renderMessageList, post }) {
 
         setText('');
         setAuthor('');
-    
         setTextFocus = (input) => input && input.focus();
     }
 
     useEffect(() => {
         messageList.length !==0 &&
-        dispatch(saveMessageWithThunk(messageList, postId));
+        dispatch(addMessageWithFirebase(messageList, postId, Date.now()));
     }, [messageList, postId, dispatch]);
+
+    useEffect(() => {
+        dispatch(initMessagesTracking(postId));
+    }, [dispatch, postId]);
 
 
     return (
@@ -68,8 +72,8 @@ export default function MessageFunc({ renderMessageList, post }) {
                 </div>
                 <div className="message_box">
                     {
-                       newMessageList[postId] &&
-                       newMessageList[postId].map((el, index) => {
+                       newMessageList &&
+                       newMessageList.map((el, index) => {
                             return (
                                 <ul key={index} className={ el.author === 'bot' ? 'bot_message' : 'user_message'}>
                                     <li className="author">author: { el.author }</li>

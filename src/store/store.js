@@ -15,7 +15,12 @@ const persistConfig = {
     storage,
     }
 
-const persistedReducer = persistReducer(persistConfig, combineReducers({ showNameReducer, messagesReducer, chatsReducer, gistsReducer }));
+const persistedReducer = persistReducer(persistConfig, combineReducers({ 
+            showNameReducer, 
+            messagesReducer, 
+            chatsReducer, 
+            gistsReducer,
+         }));
 
 export const store = createStore(
     persistedReducer,
