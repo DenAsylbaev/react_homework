@@ -3,7 +3,6 @@ import { ref, update, onValue } from "firebase/database";
 
 export const SAVE_MESSAGES ="SAVE_MESSAGES";
 
-
 export const addMesWithFirebase  = (messageList, chatId, id) => () => {
     update(ref(db, 'chats/' + chatId + '/messages/' + id), {
         message: messageList
@@ -45,22 +44,4 @@ export const initMessagesTracking = (chatId) => (dispatch) => {
             payload: arr
         });
     });
-}
-
-export const saveMessage = (messageList, postId) => ({
-    type: SAVE_MESSAGES, 
-    payload: messageList,
-    postId
-})
-
-export const saveMessageWithThunk = (messageList, postId) => (dispatch) => {
-    dispatch(saveMessage(messageList, postId));
-
-    if (messageList.author === 'user') {
-        const botMessage = {
-            text: 'Your request has been accepted',
-            author: 'bot' 
-        };
-        setTimeout(() => dispatch(saveMessage(botMessage, postId)), 2000);
-    };
 }

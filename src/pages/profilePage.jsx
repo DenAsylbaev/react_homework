@@ -30,7 +30,7 @@ export default function Profile() {
                 onChange={setShowName}
             />
             <span>Show Name</span>
-            {showName && <div>{name}</div>}
+            {showName && <div>Inputed name: {name}</div>}
 
             <input type="text" value={ value } onChange={ handleChange }/>
             <button onClick={ setName }>Set name</button>

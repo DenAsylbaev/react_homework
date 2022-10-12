@@ -1,17 +1,7 @@
 import { db } from '../../firebase-config';
 import { ref, set, remove, onValue } from "firebase/database";
 
-export const ADD_CHAT ="ADD_CHATS";
-export const addChat = (newChatName) => ({
-    type: ADD_CHAT, 
-    payload: newChatName,
-})
-
-export const DELETE_CHAT ="DELETE_CHAT";
-export const deleteChat = (id) => ({
-    type: DELETE_CHAT, 
-    payload: id
-})
+export const UPDATE_CHAT ="UPDATE_CHAT";
 
 const getPayloadFromSnapshot = (snapshot) => {
     const chats = [];
@@ -38,7 +28,7 @@ export const initChatTracking = () => (dispatch) => {
 
         const data = getPayloadFromSnapshot(snapshot);
         dispatch({
-            type: ADD_CHAT,
+            type: UPDATE_CHAT,
             payload: data
         });
     });
